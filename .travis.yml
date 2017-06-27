@@ -1,3 +1,7 @@
+# Configuration file for https://travis-ci.org
+# (c) Robert Warnke
+# Checked with http://lint.travis-ci.org
+language: ruby
 sudo: required
 dist: trusty
 before_install:
@@ -7,14 +11,8 @@ script:
 - pdflatex -interaction=nonstopmode -halt-on-error -output-directory _build FCE-lessons.tex
 - "./make_booklet.sh"
 deploy:
-  provider: releases
-  api_key:
-    secure: [YOUR KEY]
-  file:
-  - _build/FCE-lessons.pdf
-  - _build/FCE-lessons-booklet.pdf
-  - _build/FCE-lessons
-
+  provider: pages
   skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
   on:
-tags: true
+    branch: master
